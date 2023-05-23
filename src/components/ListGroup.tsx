@@ -10,7 +10,7 @@ const ListGroup = () => {
 		"San Juan",
 	];
 
-	const message = items.length === 0 ? <p>No item found</p> : null;
+	const message = items.length === 0 && <p>No item found</p>;
 
 	return (
 		<>
