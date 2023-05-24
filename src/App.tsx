@@ -3,7 +3,9 @@ import Alert from "./components/Alert";
 const App = () => {
 	return (
 		<div>
-			<Alert />
+			<Alert>
+				Hello <span> Word </span>
+			</Alert>
 		</div>
 	);
 };
