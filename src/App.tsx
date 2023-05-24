@@ -1,4 +1,5 @@
 import Alert from "./components/Alert";
+import Button from "./components/Button";
 
 const App = () => {
 	return (
@@ -6,6 +7,7 @@ const App = () => {
 			<Alert>
 				Hello <span> Word </span>
 			</Alert>
+			<Button onClick={() => console.log("click")}>My Button</Button>
 		</div>
 	);
 };
