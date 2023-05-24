@@ -2,9 +2,10 @@ import { useState } from "react";
 interface Props {
 	items: string[];
 	heading: string;
+	onSelectItem: (item: string) => void;
 }
 
-const ListGroup = ({ items, heading }: Props) => {
+const ListGroup = ({ items, heading, onSelectItem }: Props) => {
 	const message = items.length === 0 && <p>No item found</p>;
 
 	const [selectedIndex, setSelectedIndex] = useState(-1);
@@ -22,7 +23,10 @@ const ListGroup = ({ items, heading }: Props) => {
 					}`;
 					return (
 						<li
-							onClick={() => setSelectedIndex(index)}
+							onClick={() => {
+								setSelectedIndex(index);
+								onSelectItem(item);
+							}}
 							key={item}
 							className={className}
 						>
