@@ -1,32 +1,12 @@
-import { useState } from "react";
-import ListGroup from "./components/ListGroup";
-import "./App.css";
+import Button from "./components/Button";
 
 const App = () => {
-	const [isAlertVisible, setAlertVisibility] = useState(false);
-
-	const items = [
-		"Abuja",
-		"Port Harcourt",
-		"London",
-		"Paris",
-		"Madrid",
-		"Ibiza",
-		"Dakar",
-		"San Juan",
-	];
-
-	const handleSelectItem = (item: string) => {
-		console.log({ item });
-	};
-
+	const handleClick = () => console.log("click");
 	return (
 		<div>
-			<ListGroup
-				items={items}
-				heading="Cities"
-				onSelectItem={handleSelectItem}
-			/>
+			<Button color="primary" onClick={handleClick}>
+				My button
+			</Button>
 		</div>
 	);
 };
