@@ -1,11 +1,25 @@
 import { useState } from "react";
 import styled from "styled-components";
 
+interface ListItemProps {
+	active: boolean;
+}
+
+const ListItem = styled.li<ListItemProps>`
+	padding: 5px 0;
+	background-color: ${(props) => (props.active ? "blue" : "none")};
+`;
+
 interface Props {
 	items: string[];
 	heading: string;
 	onSelectItem: (item: string) => void;
 }
+
+const List = styled.ul`
+	list-style: none;
+	padding: 0;
+`;
 
 const ListGroup = ({ items, heading, onSelectItem }: Props) => {
 	const message = items.length === 0 && <p>No item found</p>;
@@ -27,27 +41,23 @@ const ListGroup = ({ items, heading, onSelectItem }: Props) => {
 		<>
 			<h1>{heading}</h1>
 			{message}
-			<ul className={[styles.listGroup, styles.container].join(" ")}>
+			<List>
 				{items.map((item, index) => {
 					const isSelected = selectedIndex === index;
-					const activeClassName = isSelected && "active";
-					const className = `list-group-item ${
-						selectedIndex === index && activeClassName
-					}`;
 					return (
-						<li
+						<ListItem
+							active={isSelected}
 							onClick={() => {
 								setSelectedIndex(index);
 								onSelectItem(item);
 							}}
 							key={item}
-							className={className}
 						>
 							{item}
-						</li>
+						</ListItem>
 					);
 				})}
-			</ul>
+			</List>
 		</>
 	);
 };
