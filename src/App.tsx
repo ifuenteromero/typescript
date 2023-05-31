@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ListGroup from "./components/ListGroup";
+import "./App.css";
 
 const App = () => {
 	const [isAlertVisible, setAlertVisibility] = useState(false);
