@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styles from "./ListGroup.module.css";
+import styled from "styled-components";
 
 interface Props {
 	items: string[];
@@ -11,6 +11,17 @@ const ListGroup = ({ items, heading, onSelectItem }: Props) => {
 	const message = items.length === 0 && <p>No item found</p>;
 
 	const [selectedIndex, setSelectedIndex] = useState(-1);
+
+	// We have another approach for styling our components called CSS in js
+	// Beneffits
+	// Scoped styles
+	// All de CSS & JS/TS code in one place
+	// Easier to delete a component
+	// Easier to sytle based on props/state
+	// Most populear libraries
+	// Styled Components => npm i styled-components => npm i @types/styled-components
+	// Emotion
+	// Polished
 
 	return (
 		<>
