@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
+import { CiVault } from "react-icons/ci";
 
 interface ListItemProps {
 	active: boolean;
@@ -53,6 +54,7 @@ const ListGroup = ({ items, heading, onSelectItem }: Props) => {
 							}}
 							key={item}
 						>
+							<CiVault color="gold" size="40" />
 							{item}
 						</ListItem>
 					);
