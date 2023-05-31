@@ -16,7 +16,7 @@ const ListGroup = ({ items, heading, onSelectItem }: Props) => {
 		<>
 			<h1>{heading}</h1>
 			{message}
-			<ul className={styles.listGroup}>
+			<ul className={[styles.listGroup, styles.container].join(" ")}>
 				{items.map((item, index) => {
 					const isSelected = selectedIndex === index;
 					const activeClassName = isSelected && "active";
