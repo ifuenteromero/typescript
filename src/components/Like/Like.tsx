@@ -11,11 +11,23 @@ const Like = ({ onClick }: Props) => {
 	const togleLike = () => setIsLiked((prevState) => !prevState);
 	const handleClick = () => {
 		togleLike();
+		console.log({ isLiked });
 		onClick();
 	};
 
+	console.log({ isLiked3: isLiked });
+
 	const IconName = isLiked ? AiFillHeart : AiOutlineHeart;
-	return <IconName color="#ff6b81" size={20} onClick={handleClick} />;
+	return (
+		<IconName
+			color="#ff6b81"
+			size={20}
+			onClick={() => {
+				handleClick();
+				console.log({ isLiked2: isLiked });
+			}}
+		/>
+	);
 };
 
 export default Like;
