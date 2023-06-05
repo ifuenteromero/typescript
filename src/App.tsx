@@ -1,9 +1,10 @@
 import Form from "./components/Form";
+import ReactHookForm from "./components/ReactHookForm";
 
 const App = () => {
 	return (
 		<div>
-			<Form />
+			<ReactHookForm />
 		</div>
 	);
 };
