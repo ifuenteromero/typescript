@@ -1,11 +1,9 @@
-import Button from "./components/Button";
-import Like from "./components/Like";
+import ToDoList from "./components/ToDoList";
 
 const App = () => {
-	const handleClick = () => console.log("click");
 	return (
 		<div>
-			<Like onClick={handleClick} />
+			<ToDoList />
 		</div>
 	);
 };
