@@ -1,9 +1,9 @@
-import ReactHookFormZod from "./components/ReactHookFormZod";
+import ExpenseTracker from "./components/expense-tracker/components/ExpenseTracker";
 
 const App = () => {
 	return (
 		<div>
-			<ReactHookFormZod />
+			<ExpenseTracker />
 		</div>
 	);
 };
