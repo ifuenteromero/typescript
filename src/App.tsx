@@ -1,10 +1,9 @@
-import Form from "./components/Form";
-import ReactHookForm from "./components/ReactHookForm";
+import ReactHookFormZod from "./components/ReactHookFormZod";
 
 const App = () => {
 	return (
 		<div>
-			<ReactHookForm />
+			<ReactHookFormZod />
 		</div>
 	);
 };
