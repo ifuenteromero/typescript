@@ -12,6 +12,8 @@ const UserList = () => {
 	const [isLoading, setLoading] = useState(false);
 
 	const USERS_ENDPOINT = "https://jsonplaceholder.typicode.com/users";
+	const USER_ENDPOINT = (id: number) =>
+		`https://jsonplaceholder.typicode.com/users/${id}`;
 
 	useEffect(() => {
 		const controller = new AbortController();
@@ -44,13 +46,33 @@ const UserList = () => {
 		return () => controller.abort();
 	}, []);
 
+	const deleteUser = (user: User) => {
+		const originalUsers = [...users];
+		setUsers(users.filter((u) => u.id !== user.id));
+		axios.delete(USER_ENDPOINT(user.id)).catch((error) => {
+			setError(error.message);
+			setUsers(originalUsers);
+		});
+	};
+
 	return (
 		<>
 			{error && <p className="text-danger">{error}</p>}
 			{isLoading && <div className="spinner-border" />}
-			<ul>
+			<ul className="list-group">
 				{users.map((user) => (
-					<li key={user.id}>{user.name}</li>
+					<li
+						key={user.id}
+						className="list-group-item d-flex justify-content-between"
+					>
+						{user.name}{" "}
+						<button
+							className="btn btn-outline-danger"
+							onClick={() => deleteUser(user)}
+						>
+							Delete
+						</button>
+					</li>
 				))}
 			</ul>
 		</>
