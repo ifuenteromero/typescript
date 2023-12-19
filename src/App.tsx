@@ -1,5 +1,6 @@
 import { ChangeEvent, useState } from "react";
 import ProductList from "./components/Connecting to the backend/ProductList";
+import Product from "./components/Connecting to the backend/Product";
 
 const App = () => {
 	const [category, setCategory] = useState("");
@@ -13,8 +14,10 @@ const App = () => {
 				<option value=""></option>
 				<option value="Clothing">Clothing</option>
 				<option value="Household">Household</option>
+				<option value="Others">Others</option>
 			</select>
 			<ProductList category={category} />
+			{category === "Clothing" && <Product />}
 		</div>
 	);
 };
