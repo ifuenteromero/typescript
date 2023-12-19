@@ -47,12 +47,24 @@ const UserList = () => {
 	}, []);
 
 	const deleteUser = (user: User) => {
-		const originalUsers = [...users];
-		setUsers(users.filter((u) => u.id !== user.id));
-		axios.delete(USER_ENDPOINT(user.id)).catch((error) => {
-			setError(error.message);
-			setUsers(originalUsers);
-		});
+		// const originalUsers = [...users];
+		// setUsers(users.filter((u) => u.id !== user.id));
+		// axios.delete(USER_ENDPOINT(user.id)).catch((error) => {
+		// 	setError(error.message);
+		// 	setUsers(originalUsers);
+		// });
+
+		setLoading(true);
+		try {
+			axios.delete(USER_ENDPOINT(user.id)).then(() => {
+				setUsers(users.filter((u) => u.id !== user.id));
+				setLoading(false);
+			});
+		} catch (error) {
+			setError((error as AxiosError).message);
+			setLoading(false);
+		} finally {
+		}
 	};
 
 	return (
@@ -65,7 +77,7 @@ const UserList = () => {
 						key={user.id}
 						className="list-group-item d-flex justify-content-between"
 					>
-						{user.name}{" "}
+						{user.name}
 						<button
 							className="btn btn-outline-danger"
 							onClick={() => deleteUser(user)}
