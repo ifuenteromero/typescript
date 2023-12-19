@@ -67,10 +67,28 @@ const UserList = () => {
 		}
 	};
 
+	const addUser = () => {
+		const newUser = { id: 0, name: "Irene" };
+		const originalUsers = [...users];
+		setUsers([newUser, ...users]);
+		setLoading(true);
+		axios
+			.post(USERS_ENDPOINT, newUser)
+			.then(({ data: savedUser }) => setUsers([savedUser, ...users]))
+			.catch((error) => {
+				setError(error.message);
+				setUsers(originalUsers);
+			})
+			.finally(() => setLoading(false));
+	};
+
 	return (
 		<>
 			{error && <p className="text-danger">{error}</p>}
 			{isLoading && <div className="spinner-border" />}
+			<button className="btn btn-primary mb-3" onClick={addUser}>
+				Add User
+			</button>
 			<ul className="list-group">
 				{users.map((user) => (
 					<li
