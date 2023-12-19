@@ -47,24 +47,27 @@ const UserList = () => {
 	}, []);
 
 	const deleteUser = (user: User) => {
-		// const originalUsers = [...users];
-		// setUsers(users.filter((u) => u.id !== user.id));
-		// axios.delete(USER_ENDPOINT(user.id)).catch((error) => {
-		// 	setError(error.message);
-		// 	setUsers(originalUsers);
-		// });
-
+		const originalUsers = [...users];
+		setUsers(users.filter((u) => u.id !== user.id));
 		setLoading(true);
-		try {
-			axios.delete(USER_ENDPOINT(user.id)).then(() => {
-				setUsers(users.filter((u) => u.id !== user.id));
-				setLoading(false);
-			});
-		} catch (error) {
-			setError((error as AxiosError).message);
-			setLoading(false);
-		} finally {
-		}
+		axios
+			.delete(USER_ENDPOINT(user.id))
+			.catch((error) => {
+				setError(error.message);
+				setUsers(originalUsers);
+			})
+			.finally(() => setLoading(false));
+		// setLoading(true);
+		// try {
+		// 	axios.delete(USER_ENDPOINT(user.id)).then(() => {
+		// 		setUsers(users.filter((u) => u.id !== user.id));
+		// 		setLoading(false);
+		// 	});
+		// } catch (error) {
+		// 	setError((error as AxiosError).message);
+		// 	setLoading(false);
+		// } finally {
+		// }
 	};
 
 	const addUser = () => {
