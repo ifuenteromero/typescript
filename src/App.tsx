@@ -1,9 +1,9 @@
-import ExpenseTracker from "./components/expense-tracker/components/ExpenseTracker";
+import EffectHook from "./components/Connecting to the backend/2EffectHook";
 
 const App = () => {
 	return (
 		<div>
-			<ExpenseTracker />
+			<EffectHook />
 		</div>
 	);
 };
