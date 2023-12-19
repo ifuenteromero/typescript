@@ -16,30 +16,31 @@ const UserList = () => {
 	useEffect(() => {
 		const controller = new AbortController();
 		const config = { signal: controller.signal };
-
-		// axios
-		// 	.get<User[]>(USERS_ENDPOINT, config)
-		// 	.then(({ data: savedUsers }) => setUsers(savedUsers))
-		// 	.catch((error) => {
-		// 		if (error instanceof CanceledError) return;
-		// 		setError(error.message);
-		// 	});
-		const getUsers = async () => {
-			try {
-				setLoading(true);
-				const { data: savedUsers } = await axios.get(
-					USERS_ENDPOINT,
-					config
-				);
-				setUsers(savedUsers);
-			} catch (error) {
+		setLoading(true);
+		axios
+			.get<User[]>(USERS_ENDPOINT, config)
+			.then(({ data: savedUsers }) => setUsers(savedUsers))
+			.catch((error) => {
 				if (error instanceof CanceledError) return;
-				setError((error as AxiosError).message);
-			} finally {
-				setLoading(false);
-			}
-		};
-		getUsers();
+				setError(error.message);
+			})
+			.finally(() => setLoading(false));
+		// const getUsers = async () => {
+		// 	try {
+		// 		setLoading(true);
+		// 		const { data: savedUsers } = await axios.get(
+		// 			USERS_ENDPOINT,
+		// 			config
+		// 		);
+		// 		setUsers(savedUsers);
+		// 	} catch (error) {
+		// 		if (error instanceof CanceledError) return;
+		// 		setError((error as AxiosError).message);
+		// 	} finally {
+		// 		setLoading(false);
+		// 	}
+		// };
+		// getUsers();
 		return () => controller.abort();
 	}, []);
 
