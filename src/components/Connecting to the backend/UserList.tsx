@@ -9,6 +9,7 @@ interface User {
 const UserList = () => {
 	const [users, setUsers] = useState<User[]>([]);
 	const [error, setError] = useState("");
+	const [isLoading, setLoading] = useState(false);
 
 	const USERS_ENDPOINT = "https://jsonplaceholder.typicode.com/users";
 
@@ -25,6 +26,7 @@ const UserList = () => {
 		// 	});
 		const getUsers = async () => {
 			try {
+				setLoading(true);
 				const { data: savedUsers } = await axios.get(
 					USERS_ENDPOINT,
 					config
@@ -34,7 +36,7 @@ const UserList = () => {
 				if (error instanceof CanceledError) return;
 				setError((error as AxiosError).message);
 			} finally {
-				console.log("finally");
+				setLoading(false);
 			}
 		};
 		getUsers();
@@ -44,6 +46,7 @@ const UserList = () => {
 	return (
 		<>
 			{error && <p className="text-danger">{error}</p>}
+			{isLoading && <div className="spinner-border" />}
 			<ul>
 				{users.map((user) => (
 					<li key={user.id}>{user.name}</li>
