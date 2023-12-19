@@ -1,4 +1,4 @@
-import axios, { AxiosError } from "axios";
+import axios, { AxiosError, CanceledError } from "axios";
 import { useEffect, useState } from "react";
 
 interface User {
@@ -10,26 +10,31 @@ const UserList = () => {
 	const [users, setUsers] = useState<User[]>([]);
 	const [error, setError] = useState("");
 
-	const USERS_ENDPOINT = "https://jsonplaceholder.typicode.com/xusers";
+	const USERS_ENDPOINT = "https://jsonplaceholder.typicode.com/users";
 
 	useEffect(() => {
-		// axios
-		// 	.get<User[]>(USERS_ENDPOINT)
-		// 	.then(({ data: savedUsers }) => setUsers(savedUsers))
-		// 	.catch((error) => setError(error.message));
+		const controller = new AbortController();
+		const config = { signal: controller.signal };
 
-		const getUsers = async () => {
-			try {
-				const { data: savedUsers } = await axios.get(USERS_ENDPOINT);
-				setUsers(savedUsers);
-			} catch (error) {
-				setError((error as AxiosError).message);
-			} finally {
-				console.log("finally");
-			}
-		};
-
-		getUsers();
+		axios
+			.get<User[]>(USERS_ENDPOINT, config)
+			.then(({ data: savedUsers }) => setUsers(savedUsers))
+			.catch((error) => {
+				if (error instanceof CanceledError) return;
+				setError(error.message);
+			});
+		// const getUsers = async () => {
+		// 	try {
+		// 		const { data: savedUsers } = await axios.get(USERS_ENDPOINT);
+		// 		setUsers(savedUsers);
+		// 	} catch (error) {
+		// 		setError((error as AxiosError).message);
+		// 	} finally {
+		// 		console.log("finally");
+		// 	}
+		// };
+		// getUsers();
+		return () => controller.abort();
 	}, []);
 
 	return (
