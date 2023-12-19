@@ -16,24 +16,28 @@ const UserList = () => {
 		const controller = new AbortController();
 		const config = { signal: controller.signal };
 
-		axios
-			.get<User[]>(USERS_ENDPOINT, config)
-			.then(({ data: savedUsers }) => setUsers(savedUsers))
-			.catch((error) => {
+		// axios
+		// 	.get<User[]>(USERS_ENDPOINT, config)
+		// 	.then(({ data: savedUsers }) => setUsers(savedUsers))
+		// 	.catch((error) => {
+		// 		if (error instanceof CanceledError) return;
+		// 		setError(error.message);
+		// 	});
+		const getUsers = async () => {
+			try {
+				const { data: savedUsers } = await axios.get(
+					USERS_ENDPOINT,
+					config
+				);
+				setUsers(savedUsers);
+			} catch (error) {
 				if (error instanceof CanceledError) return;
-				setError(error.message);
-			});
-		// const getUsers = async () => {
-		// 	try {
-		// 		const { data: savedUsers } = await axios.get(USERS_ENDPOINT);
-		// 		setUsers(savedUsers);
-		// 	} catch (error) {
-		// 		setError((error as AxiosError).message);
-		// 	} finally {
-		// 		console.log("finally");
-		// 	}
-		// };
-		// getUsers();
+				setError((error as AxiosError).message);
+			} finally {
+				console.log("finally");
+			}
+		};
+		getUsers();
 		return () => controller.abort();
 	}, []);
 
