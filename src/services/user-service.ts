@@ -1,6 +1,7 @@
 import apiClient from "./api-client";
 
 export const USERS_ENDPOINT = "/users";
+export const USER_ENDPOINT = (id: number) => `${USERS_ENDPOINT}/${id}`;
 
 export interface User {
     id: number;
@@ -16,6 +17,10 @@ class UserService {
         const cancel = () => controller.abort();
         return { request, cancel }
 
+    }
+
+    deleteUser(id: number) {
+        return apiClient.delete(USER_ENDPOINT(id));
     }
 }
 

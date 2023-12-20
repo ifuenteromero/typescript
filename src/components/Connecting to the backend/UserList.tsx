@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import apiClient, { CanceledError } from "../../services/api-client";
-import userService, { USERS_ENDPOINT, User } from "../../services/user-service";
+import userService, {
+	USERS_ENDPOINT,
+	USER_ENDPOINT,
+	User,
+} from "../../services/user-service";
 
 const UserList = () => {
 	const [users, setUsers] = useState<User[]>([]);
 	const [error, setError] = useState("");
 	const [isLoading, setLoading] = useState(false);
-
-	const USER_ENDPOINT = (id: number) => `/users/${id}`;
 
 	useEffect(() => {
 		setLoading(true);
@@ -43,8 +45,8 @@ const UserList = () => {
 		const originalUsers = [...users];
 		setUsers(users.filter((u) => u.id !== user.id));
 		setLoading(true);
-		apiClient
-			.delete(USER_ENDPOINT(user.id))
+		userService
+			.deleteUser(user.id)
 			.catch((error) => {
 				setError(error.message);
 				setUsers(originalUsers);
