@@ -22,6 +22,11 @@ class UserService {
     deleteUser(id: number) {
         return apiClient.delete(USER_ENDPOINT(id));
     }
+
+    addUser(user: User) {
+        return apiClient
+            .post(USERS_ENDPOINT, user)
+    }
 }
 
 export default new UserService()

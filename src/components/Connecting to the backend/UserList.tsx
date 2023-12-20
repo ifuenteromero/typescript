@@ -1,10 +1,6 @@
 import { useEffect, useState } from "react";
 import apiClient, { CanceledError } from "../../services/api-client";
-import userService, {
-	USERS_ENDPOINT,
-	USER_ENDPOINT,
-	User,
-} from "../../services/user-service";
+import userService, { USER_ENDPOINT, User } from "../../services/user-service";
 
 const UserList = () => {
 	const [users, setUsers] = useState<User[]>([]);
@@ -70,8 +66,8 @@ const UserList = () => {
 		const originalUsers = [...users];
 		setUsers([newUser, ...users]);
 		setLoading(true);
-		apiClient
-			.post(USERS_ENDPOINT, newUser)
+		userService
+			.addUser(newUser)
 			.then(({ data: savedUser }) => setUsers([savedUser, ...users]))
 			.catch((error) => {
 				setError(error.message);
