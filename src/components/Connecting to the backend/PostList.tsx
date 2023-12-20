@@ -9,7 +9,7 @@ const PostList = () => {
 
 	useEffect(() => {
 		setLoading(true);
-		const { request, cancel } = postService.getAllPosts();
+		const { request, cancel } = postService.getAll<Post>();
 
 		request
 			.then(({ data: savedPosts }) => setPosts(savedPosts))
@@ -26,7 +26,7 @@ const PostList = () => {
 		setPosts(posts.filter((p) => p.id !== post.id));
 		setLoading(true);
 		postService
-			.deletePost(post.id)
+			.delete(post.id)
 			.catch((error) => {
 				setError(error.message);
 				setPosts(originalPosts);
@@ -40,7 +40,7 @@ const PostList = () => {
 		setPosts(posts.map((p) => (p.id === post.id ? updatedPost : p)));
 		setLoading(true);
 		postService
-			.updatePost(updatedPost)
+			.update(updatedPost)
 			.catch((error) => {
 				setError(error.message);
 				setPosts(originalPosts);
@@ -58,7 +58,7 @@ const PostList = () => {
 		setLoading(true);
 		const originalPosts = [...posts];
 		postService
-			.addPost(newPost)
+			.create(newPost)
 			.then(({ data: savedPost }) =>
 				setPosts([savedPost, ...originalPosts])
 			)
