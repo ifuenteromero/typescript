@@ -1,36 +1,10 @@
-import apiClient from "./api-client";
+import create from "./http-service";
 
-export const USERS_ENDPOINT = "/users";
-export const USER_ENDPOINT = (id: number) => `${USERS_ENDPOINT}/${id}`;
+const USERS_ENDPOINT = "/users";
 
 export interface User {
     id: number;
     name: string;
 }
 
-class UserService {
-    getAllUsers() {
-        const controller = new AbortController();
-        const config = { signal: controller.signal };
-        const request = apiClient
-            .get<User[]>(USERS_ENDPOINT, config)
-        const cancel = () => controller.abort();
-        return { request, cancel }
-
-    }
-
-    deleteUser(id: number) {
-        return apiClient.delete(USER_ENDPOINT(id));
-    }
-
-    addUser(user: User) {
-        return apiClient
-            .post(USERS_ENDPOINT, user)
-    }
-
-    updateUser(user: User) {
-        return apiClient.patch(USER_ENDPOINT(user.id), user)
-    }
-}
-
-export default new UserService()
+export default create(USERS_ENDPOINT)
