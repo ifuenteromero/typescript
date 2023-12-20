@@ -1,25 +1,19 @@
 import { useEffect, useState } from "react";
 import apiClient, { CanceledError } from "../../services/api-client";
-
-interface User {
-	id: number;
-	name: string;
-}
+import userService, { USERS_ENDPOINT, User } from "../../services/user-service";
 
 const UserList = () => {
 	const [users, setUsers] = useState<User[]>([]);
 	const [error, setError] = useState("");
 	const [isLoading, setLoading] = useState(false);
 
-	const USERS_ENDPOINT = "/users";
 	const USER_ENDPOINT = (id: number) => `/users/${id}`;
 
 	useEffect(() => {
-		const controller = new AbortController();
-		const config = { signal: controller.signal };
 		setLoading(true);
-		apiClient
-			.get<User[]>(USERS_ENDPOINT, config)
+		const { request, cancel } = userService.getAllUsers();
+
+		request
 			.then(({ data: savedUsers }) => setUsers(savedUsers))
 			.catch((error) => {
 				if (error instanceof CanceledError) return;
@@ -42,7 +36,7 @@ const UserList = () => {
 		// 	}
 		// };
 		// getUsers();
-		return () => controller.abort();
+		return () => cancel();
 	}, []);
 
 	const deleteUser = (user: User) => {
