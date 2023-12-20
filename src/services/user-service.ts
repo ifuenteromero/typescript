@@ -27,6 +27,10 @@ class UserService {
         return apiClient
             .post(USERS_ENDPOINT, user)
     }
+
+    updateUser(user: User) {
+        return apiClient.patch(USER_ENDPOINT(user.id), user)
+    }
 }
 
 export default new UserService()

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import apiClient, { CanceledError } from "../../services/api-client";
-import userService, { USER_ENDPOINT, User } from "../../services/user-service";
+import { CanceledError } from "../../services/api-client";
+import userService, { User } from "../../services/user-service";
 
 const UserList = () => {
 	const [users, setUsers] = useState<User[]>([]);
@@ -81,8 +81,8 @@ const UserList = () => {
 		setUsers(users.map((u) => (u.id === user.id ? updatedUser : u)));
 		const originalUsers = [...users];
 		setLoading(true);
-		apiClient
-			.patch(USER_ENDPOINT(user.id), updatedUser)
+		userService
+			.updateUser(updatedUser)
 			.catch((error) => {
 				setError(error.message);
 				setUsers(originalUsers);
