@@ -2,8 +2,14 @@ import userService, { User } from "../../services/user-service";
 import useUsers from "../../hooks/useUsers";
 
 const UserList = () => {
-	const { users, setUsers, error, setError, isLoading, setLoading } =
-		useUsers();
+	const {
+		data: users,
+		setData: setUsers,
+		error,
+		setError,
+		isLoading,
+		setLoading,
+	} = useUsers();
 
 	const deleteUser = (user: User) => {
 		const originalUsers = [...users];
