@@ -2,8 +2,14 @@ import postService, { Post } from "../../services/post-service";
 import usePosts from "../../hooks/usePosts";
 
 const PostList = () => {
-	const { posts, setPosts, error, setError, isLoading, setLoading } =
-		usePosts();
+	const {
+		data: posts,
+		setData: setPosts,
+		error,
+		setError,
+		isLoading,
+		setLoading,
+	} = usePosts();
 
 	const deletePost = (post: Post) => {
 		const originalPosts = [...posts];
